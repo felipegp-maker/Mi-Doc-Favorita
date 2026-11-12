@@ -1,0 +1,923 @@
+/* ==========================================================================
+   ÍNDICE
+   --------------------------------------------------------------------------
+   01. Variables
+   02. Reset y base
+   03. Utilidades
+   04. Componentes globales (botones, títulos)
+   05. Login
+   06. Barra superior
+   07. Menú lateral (drawer)
+   08. Vistas (contenedor general)
+   09. Inicio
+   10. Cartas (grid de 2 columnas)
+   11. Modal
+   12. Fotos
+   13. Galería bloqueada
+   14. Razones
+   15. Historia (timeline)
+   16. Cupones
+   17. Responsive
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. VARIABLES
+   ========================================================================== */
+:root {
+  /* Colores */
+  --purple: #9333ea;
+  --pink: #ff69b4;
+  --red: #f0173a;
+
+  /* Gradientes */
+  --grad: linear-gradient(90deg, var(--purple), var(--pink), var(--red));
+  --grad-diag: linear-gradient(135deg, #9333ea 0%, #ff69b4 55%, #f0173a 100%);
+  --bg: linear-gradient(135deg, #6a2a9c 0%, #9b3f78 30%, #5a1e36 62%, #3a0a14 100%);
+
+  /* Superficies y texto */
+  --card: #1a0c14;
+  --text: #fff;
+  --muted: #d3b5c8;
+}
+
+
+/* ==========================================================================
+   02. RESET Y BASE
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text);
+  min-height: 100vh;
+  background: var(--bg) fixed;
+  overflow-x: hidden;
+}
+
+main {
+  padding: 90px 18px 60px;
+}
+
+
+/* ==========================================================================
+   03. UTILIDADES
+   ========================================================================== */
+.hidden {
+  display: none !important;
+}
+
+.script {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;
+}
+
+.grad {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .3em;
+  font-size: .85rem;
+  color: #cdb2c6;
+}
+
+.eyebrow.pink {
+  color: var(--pink);
+  font-size: .7rem;
+  letter-spacing: .35em;
+}
+
+
+/* ==========================================================================
+   04. COMPONENTES GLOBALES
+   ========================================================================== */
+
+/* Botón principal */
+.btn {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  padding: 18px;
+  font: 600 1.05rem 'Outfit', sans-serif;
+  color: #fff;
+  background: var(--grad);
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(255, 105, 180, .4);
+}
+
+.btn.small {
+  width: auto;
+  padding: 14px 34px;
+}
+
+/* Títulos de vista */
+.title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+  font-size: .95rem;
+}
+
+
+/* ==========================================================================
+   05. LOGIN
+   ========================================================================== */
+#login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #2e1650 0%, #4a1a2a 45%, #1a0508 75%, #050203 100%);
+  margin: 0;
+}
+
+/* Corazones flotantes */
+.hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hearts span {
+  position: absolute;
+  bottom: -60px;
+  animation: floatUp linear infinite;
+  opacity: .85;
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(0) rotate(0); opacity: 0; }
+  10%  { opacity: .85; }
+  100% { transform: translateY(-115vh) rotate(25deg); opacity: 0; }
+}
+
+/* Tarjeta de login */
+.login-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: #150b11;
+  border-radius: 34px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 0 70px rgba(255, 105, 180, .28);
+  border: 1px solid rgba(255, 105, 180, .12);
+}
+
+.login-card h1 {
+  font-size: 4rem;
+  line-height: 1.1;
+  margin: 4px 0 8px;
+}
+
+.login-card .sub {
+  color: var(--muted);
+  font-size: 1.15rem;
+  margin-bottom: 34px;
+}
+
+.login-card label {
+  display: block;
+  text-align: left;
+  color: var(--muted);
+  margin: 0 0 8px 2px;
+}
+
+.login-card input {
+  width: 100%;
+  background: #070407;
+  border: 1px solid rgba(255, 105, 180, .28);
+  border-radius: 999px;
+  padding: 20px 24px;
+  color: #fff;
+  font: 1rem 'Outfit', sans-serif;
+  margin-bottom: 22px;
+  outline: none;
+}
+
+.login-card input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255, 105, 180, .18);
+}
+
+.error {
+  color: #ff6b8a;
+  min-height: 20px;
+  margin: -8px 0 12px;
+  font-size: .9rem;
+}
+
+
+/* ==========================================================================
+   06. BARRA SUPERIOR
+   ========================================================================== */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 62px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  background: rgba(30, 12, 36, .78);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 1.9rem;
+}
+
+.brand-heart {
+  color: var(--pink);
+  font-size: 1.2rem;
+}
+
+/* Botón hamburguesa */
+.burger {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--grad-diag);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-shadow: 0 0 18px rgba(255, 105, 180, .5);
+}
+
+.burger span {
+  width: 18px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+
+/* ==========================================================================
+   07. MENÚ LATERAL (DRAWER)
+   ========================================================================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .6);
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s;
+  z-index: 60;
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(340px, 86vw);
+  background: #0b0508;
+  z-index: 70;
+  transform: translateX(100%);
+  transition: transform .35s;
+  padding: 24px 14px;
+  border-left: 1px solid rgba(255, 255, 255, .08);
+}
+
+.drawer.open {
+  transform: none;
+}
+
+.drawer-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--pink);
+  background: none;
+  color: var(--pink);
+  cursor: pointer;
+}
+
+.drawer-title {
+  font-size: 2.3rem;
+  margin: 6px 0 24px 8px;
+}
+
+/* Enlaces de navegación */
+.drawer nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 6px;
+  transition: .2s;
+}
+
+.drawer nav a:hover {
+  background: rgba(255, 255, 255, .06);
+}
+
+.drawer nav a.active {
+  background: var(--grad);
+}
+
+.drawer nav i {
+  font-style: normal;
+  width: 20px;
+  text-align: center;
+}
+
+.logout {
+  margin: 22px 0 0 14px;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font: .85rem 'Outfit', sans-serif;
+  cursor: pointer;
+}
+
+
+/* ==========================================================================
+   08. VISTAS (CONTENEDOR GENERAL)
+   ========================================================================== */
+.view {
+  display: none;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fade .5s;
+}
+
+.view.active {
+  display: block;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+
+/* ==========================================================================
+   09. INICIO
+   ========================================================================== */
+.hero {
+  text-align: center;
+  padding: 60px 0 50px;
+}
+
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 7vw, 4rem);
+  margin: 14px 0 4px;
+}
+
+.hero-sub {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+}
+
+.hero-text {
+  color: var(--muted);
+  font-size: .9rem;
+  max-width: 380px;
+  margin: 18px auto 0;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  max-width: 530px;
+  margin: 40px auto 0;
+}
+
+.home-card {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 14px;
+  padding: 18px;
+  text-align: left;
+  color: #fff;
+  font: 500 .95rem 'Playfair Display', serif;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.home-card span {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.home-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--pink);
+  box-shadow: 0 8px 24px rgba(255, 105, 180, .2);
+}
+
+
+/* ==========================================================================
+   10. CARTAS (GRID DE 2 COLUMNAS)
+   ========================================================================== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 710px;
+  margin: 0 auto;
+}
+
+.letter {
+  position: relative;
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 22px;
+  padding: 28px 30px;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  color: #fff;
+  text-align: left;
+  font: 1.25rem 'Playfair Display', serif;
+  transition: .25s;
+}
+
+.letter span {
+  font-size: 2rem;
+}
+
+.letter:hover {
+  transform: translateY(-4px);
+  border-color: var(--pink);
+  box-shadow: 0 10px 28px rgba(255, 105, 180, .22);
+}
+
+/* Carta extra: botón "+" y eliminar (solo admin) */
+.letter.add {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--pink);
+  background: rgba(26, 12, 20, .6);
+  font-size: 3.2rem;
+  color: var(--pink);
+}
+
+body.is-admin .letter.add {
+  display: flex;
+}
+
+.letter .letter-del {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .65);
+  color: #fff;
+  font-size: .9rem;
+  line-height: 28px;
+  text-align: center;
+}
+
+body.is-admin .letter .letter-del {
+  display: block;
+}
+
+
+/* ==========================================================================
+   11. MODAL
+   ========================================================================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .7);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 840px;
+  background: #030203;
+  border-radius: 34px;
+  padding: 50px 60px;
+  box-shadow: 0 0 70px rgba(255, 105, 180, .3);
+  border: 1px solid rgba(255, 105, 180, .12);
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.modal-box h3 {
+  font-size: 3rem;
+  margin-bottom: 24px;
+}
+
+.modal-box p#modalText {
+  font-weight: 500;
+  line-height: 1.7;
+  white-space: pre-line;
+  margin-bottom: 20px;
+}
+
+.signature {
+  text-align: right;
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+/* Formulario de carta nueva (admin) */
+.compose-input {
+  width: 100%;
+  background: #070407;
+  border: 1px solid rgba(255, 105, 180, .28);
+  border-radius: 18px;
+  padding: 16px 20px;
+  color: #fff;
+  font: 1rem 'Outfit', sans-serif;
+  margin-bottom: 16px;
+  outline: none;
+  resize: vertical;
+}
+
+.compose-input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255, 105, 180, .18);
+}
+
+.compose-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn.ghost {
+  background: none;
+  border: 1px solid rgba(255, 105, 180, .5);
+}
+
+/* Variante clara (foto ampliada) */
+.modal-box.light {
+  max-width: 560px;
+  text-align: center;
+  padding: 26px;
+}
+
+.modal-box.light img {
+  width: 100%;
+  border-radius: 20px;
+  max-height: 62vh;
+  object-fit: contain;
+}
+
+.modal-box.light p {
+  font-size: 2rem;
+  margin: 14px 0;
+}
+
+
+/* ==========================================================================
+   12. FOTOS
+   ========================================================================== */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 710px;
+  margin: 30px auto 0;
+}
+
+.photo {
+  background: #1a0c14;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .1);
+  position: relative;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.photo:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(255, 105, 180, .25);
+}
+
+.photo .img {
+  aspect-ratio: 3 / 4.4;
+  background: var(--grad-diag);
+  background-size: cover;
+  background-position: center;
+}
+
+.photo .cap {
+  padding: 10px 8px;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: var(--pink);
+  background: #1a0c14;
+}
+
+/* Controles de administrador */
+.photo .del {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(0, 0, 0, .65);
+  color: #fff;
+  cursor: pointer;
+  display: none;
+}
+
+body.is-admin .photo .del {
+  display: block;
+}
+
+.photo.add {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 3 / 5.3;
+  border: 2px dashed var(--pink);
+  background: rgba(26, 12, 20, .6);
+  font-size: 3.2rem;
+  color: var(--pink);
+}
+
+body.is-admin .photo.add {
+  display: flex;
+}
+
+
+/* ==========================================================================
+   13. GALERÍA BLOQUEADA
+   ========================================================================== */
+.locked {
+  max-width: 480px;
+  margin: 50px auto 0;
+  background: var(--card);
+  border: 1px dashed rgba(255, 105, 180, .4);
+  border-radius: 28px;
+  padding: 50px 30px;
+  text-align: center;
+}
+
+.lock-icon {
+  font-size: 4rem;
+  margin-bottom: 12px;
+  animation: pulse 2.2s infinite;
+}
+
+@keyframes pulse {
+  50% { transform: scale(1.12); }
+}
+
+.locked h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  margin-bottom: 8px;
+}
+
+.locked p {
+  color: var(--muted);
+}
+
+
+/* ==========================================================================
+   14. RAZONES
+   ========================================================================== */
+.reasons .reason {
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 16px;
+  padding: 22px 20px;
+  min-height: 100px;
+  cursor: pointer;
+  text-align: left;
+  color: #fff;
+  background: var(--card);
+  transition: .3s;
+}
+
+.reason .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.reason .hidden-hearts {
+  font-size: 1rem;
+  letter-spacing: 6px;
+}
+
+.reason.open {
+  background: var(--grad-diag);
+  border-color: transparent;
+  font-weight: 500;
+  font-size: .95rem;
+}
+
+.reason.multi {
+  cursor: default;
+}
+
+/* Razones con varios botones */
+.hrow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hbtn {
+  background: none;
+  border: 0;
+  color: #fff;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.hbtn.open {
+  background: var(--grad-diag);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 500;
+  font-size: .9rem;
+}
+
+
+/* ==========================================================================
+   15. HISTORIA (TIMELINE)
+   ========================================================================== */
+.timeline {
+  position: relative;
+  max-width: 700px;
+  margin: 40px auto 0;
+  padding-left: 28px;
+  border-left: 1.5px solid var(--pink);
+}
+
+.t-item {
+  position: relative;
+  margin-bottom: 34px;
+}
+
+.t-item::before {
+  content: '';
+  position: absolute;
+  left: -37px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--grad-diag);
+}
+
+.t-label {
+  display: block;
+  text-transform: uppercase;
+  font-size: .7rem;
+  letter-spacing: .12em;
+  color: var(--pink);
+  margin-bottom: 8px;
+}
+
+.t-card {
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 14px;
+  padding: 20px 18px;
+}
+
+.t-card h3 {
+  font: 500 1.35rem 'Playfair Display', serif;
+  margin-bottom: 4px;
+}
+
+.t-card p {
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+
+/* ==========================================================================
+   16. CUPONES
+   ========================================================================== */
+.coupon {
+  border-radius: 16px;
+  padding: 24px 20px;
+  cursor: pointer;
+  text-align: left;
+  color: #fff;
+  background: var(--card);
+  border: 1px solid rgba(255, 255, 255, .1);
+  transition: .3s;
+}
+
+.coupon .emo {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.coupon h3 {
+  font: 600 1.05rem 'Playfair Display', serif;
+  margin-bottom: 8px;
+}
+
+.coupon small {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.coupon:not(.done):hover {
+  transform: translateY(-3px);
+  border-color: var(--pink);
+}
+
+.coupon.done {
+  background: var(--grad-diag);
+  border: 1.5px dashed rgba(255, 255, 255, .7);
+  cursor: default;
+}
+
+
+/* ==========================================================================
+   17. RESPONSIVE
+   ========================================================================== */
+@media (max-width: 640px) {
+  .grid-2        { grid-template-columns: 1fr; }
+  .photo-grid    { grid-template-columns: repeat(2, 1fr); }
+  .home-grid     { grid-template-columns: 1fr 1fr; }
+  .login-card    { padding: 34px 24px; }
+  .modal-box     { padding: 34px 26px; }
+  .modal-box h3  { font-size: 2.3rem; }
+}

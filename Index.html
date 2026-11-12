@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi doctora favorita</title>
+
+  <!-- Para Google y para cuando compartas el enlace -->
+  <meta name="description" content="Un regalo especial para mi doctora favorita 💜">
+  <meta property="og:title" content="Mi doctora favorita">
+  <meta property="og:description" content="Un regalo hecho con mucho cariño 💜">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<section id="login">
+  <div class="hearts" id="hearts"></div>
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <p class="eyebrow">Solo para nosotros dos</p>
+    <h1 class="script grad">Bienvenida</h1>
+    <p class="sub">Ingresa para abrir tu regalo</p>
+    <label for="user">Usuario</label>
+    <input id="user" type="text" autocapitalize="none" required>
+    <label for="pass">Clave secreta</label>
+    <input id="pass" type="password" required>
+    <p class="error" id="loginError"></p>
+    <button class="btn" type="submit">Abrir mi regalo 🎁</button>
+  </form>
+</section>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hidden">
+
+  <header class="topbar">
+    <a class="brand" href="#" data-go="inicio"><span class="brand-heart">♥</span><span class="script grad">Mi doctora favorita</span></a>
+    <button class="burger" id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </header>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="drawer">
+    <button class="drawer-close" id="drawerClose" aria-label="Cerrar">✕</button>
+    <h2 class="script grad drawer-title">Para Milanyela</h2>
+    <nav>
+      <a data-go="inicio" class="active"><i>✨</i>Inicio</a>
+      <a data-go="cartas"><i>💌</i>Cartas para ti</a>
+      <a data-go="fotos"><i>🌸</i>Fotos únicas tuyas</a>
+      <a data-go="galeria"><i>📷</i>Galería de recuerdos</a>
+      <a data-go="razones"><i>💖</i>Razones por las que te quiero</a>
+      <a data-go="historia"><i>🕰️</i>Nuestra historia</a>
+      <a data-go="cupones"><i>🎟️</i>Cupones para ti</a>
+    </nav>
+    <button class="logout" id="logout">⎋ Cerrar sesión</button>
+  </aside>
+
+  <main>
+
+    <!-- INICIO -->
+    <section class="view active" id="view-inicio">
+      <div class="hero">
+        <p class="eyebrow pink">Un regalo para</p>
+        <h1 class="hero-name">Milanyela <span class="grad">Lameda</span></h1>
+        <h2 class="script grad hero-sub">mi doctora favorita</h2>
+        <p class="hero-text">Hice este rinconcito solo para ti. Abre el menú o elige una parte de tu regalo 💜</p>
+      </div>
+      <div class="home-grid">
+        <button class="home-card" data-go="cartas"><span>💌</span>Cartas para ti</button>
+        <button class="home-card" data-go="fotos"><span>🌸</span>Fotos únicas tuyas</button>
+        <button class="home-card" data-go="galeria"><span>📷</span>Galería de recuerdos</button>
+        <button class="home-card" data-go="razones"><span>💖</span>Razones por las que te quiero</button>
+        <button class="home-card" data-go="historia"><span>🕰️</span>Nuestra historia</button>
+        <button class="home-card" data-go="cupones"><span>🎟️</span>Cupones para ti</button>
+      </div>
+    </section>
+
+    <!-- CARTAS -->
+    <section class="view" id="view-cartas">
+      <h2 class="title">Cartas <span class="grad">para ti</span></h2>
+      <p class="subtitle">Abre cada sobre cuando lo necesites 💌</p>
+      <div class="grid-2" id="lettersGrid"></div>
+    </section>
+
+    <!-- FOTOS -->
+    <section class="view" id="view-fotos">
+      <h2 class="title">Fotos <span class="grad">únicas tuyas</span></h2>
+      <div class="photo-grid" id="photoGrid"></div>
+      <input type="file" id="photoInput" accept="image/*" hidden>
+    </section>
+
+    <!-- GALERÍA (BLOQUEADA) -->
+    <section class="view" id="view-galeria">
+      <h2 class="title">Galería <span class="grad">de recuerdos</span></h2>
+      <div class="locked">
+        <div class="lock-icon">🔒</div>
+        <h3>Bloqueado</h3>
+        <p>Se desbloquea cuando nos encontremos en persona 💜</p>
+      </div>
+    </section>
+
+    <!-- RAZONES -->
+    <section class="view" id="view-razones">
+      <h2 class="title">Razones por las que <span class="grad">te quiero</span></h2>
+      <p class="subtitle">Toca cada corazón para descubrirla 💖</p>
+      <div class="grid-2 reasons" id="reasonsGrid"></div>
+    </section>
+
+    <!-- HISTORIA -->
+    <section class="view" id="view-historia">
+      <h2 class="title">Nuestra <span class="grad">historia</span></h2>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <!-- CUPONES -->
+    <section class="view" id="view-cupones">
+      <h2 class="title">Cupones <span class="grad">para ti</span></h2>
+      <p class="subtitle">Toca uno para canjearlo 🎟️</p>
+      <div class="grid-2" id="couponsGrid"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ MODAL CARTA ============ -->
+<div class="modal hidden" id="modal">
+  <div class="modal-box">
+    <h3 class="script grad" id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <p class="signature script grad">— Andrés</p>
+    <button class="btn small" id="modalClose">Cerrar</button>
+  </div>
+</div>
+
+<!-- ============ LIGHTBOX FOTO ============ -->
+<div class="modal hidden" id="lightbox">
+  <div class="modal-box light">
+    <img id="lightImg" alt="">
+    <p class="script grad" id="lightCap"></p>
+    <button class="btn small" id="lightClose">Cerrar</button>
+  </div>
+</div>
+
+<!-- Firebase (opcional, solo para que las fotos y cartas nuevas se sincronicen) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<!-- Lógica de la página -->
+<script src="script.js"></script>
+</body>
+</html>
